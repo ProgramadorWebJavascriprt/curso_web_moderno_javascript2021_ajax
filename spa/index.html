@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>Mini SPA</title>
+    <link rel='stylesheet' href='../css/estilo.css'>
+    <style>
+        nav {
+            font-size: 2em;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #FFF;
+            padding: 0 10px;
+        }
+  
+        /*Obs.: Amanhã apṕs vir do culto faço essa aula
+        segue o link : https://www.udemy.com/course/curso-web/learn/lecture/10347630#overview
+        *
+        $ Obs.: estava muito cansando e chegamos muito tarde...
+          Quinta-feira 25/11/2021 as 21:52:00 até as   h +| -
+          Após finalizar essa aula publicar no Github
+        */
+        </style>
+</head>
+
+<body class="conteudo">
+    <nav>
+        <a href wm-link="series.html" wm-destino=".pagina">Séries</a> |
+        <a href wm-link="linguagens.html" wm-destino=".pagina">Linguagens</a>
+    </nav>
+    <div class="pagina"></div>
+    <script>
+        function navegorViaAjax(url, seletor, push = true) {
+            if(!url || !seletor) return
+           const elemento = document.querySelector(seletor) 
+           fetch(url)
+             .then(resp => resp.text())
+             .then(html => {
+                 elemento.innerHTML = html
+                 if(push) {
+                     history.pushState({seletor}, "Página Ajax" , url)
+                 }
+
+             })
+        }
+        document.querySelectorAll(`[wn-link]`).forEach(links =>{
+            const url = links.attributes[`wn-link`].value
+            const seletorDestino = link.attributes[`wn-destino`].value
+            link.onclick = e  => {
+                 e.preventDefault()
+                 navegorViaAjax(url,seletorDestino)
+
+            }
+        })
+            window.onpopstate =  e => {
+                if(e.state){
+                    navegorViaAjax(window.location.href, e.state.seletor, false)
+                }
+            }
+
+
+    </script>
+</body>
